@@ -3,7 +3,6 @@ package ru.litres.ui.pages.login.otherways;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import ru.litres.ui.driver.Driver;
 
 import java.util.Set;
@@ -65,8 +64,7 @@ public class OtherWaysPage {
     public boolean checkLogoSocialsLinks() {
         String[] expectedLogo = {"gp", "vk", "ok", "sb", "ya", "ma"};
         for (String altLogo : expectedLogo) {
-            WebElement logo = driver.findElement(By.xpath("//img[@alt='" + altLogo + "']"));
-            logo.isDisplayed();
+            driver.findElement(By.xpath("//img[@alt='" + altLogo + "']")).isDisplayed();
         }
         return true;
     }

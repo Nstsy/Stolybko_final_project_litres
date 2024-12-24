@@ -16,7 +16,6 @@ import ru.litres.ui.steps.LoginPasswordStep;
 @Epic("UI тесты")
 @Feature("UI тесты формы логина при входе с логином и паролем")
 public class LoginWithPasswordTest extends BaseUiTest {
-    private static final Logger logger = LogManager.getLogger(LoginWithPasswordTest.class);
     private LoginPasswordPage loginPasswordPage;
     private LoginPasswordStep loginPasswordStep;
 

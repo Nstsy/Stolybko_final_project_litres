@@ -14,7 +14,6 @@ import ru.litres.ui.pages.login.otherways.OtherWaysPage;
 @Epic("UI тесты")
 @Feature("UI тесты формы логина при входе другими способами")
 public class LoginWithOtherWaysTest extends BaseUiTest {
-    private static final Logger logger = LogManager.getLogger(LoginWithOtherWaysTest.class);
     private OtherWaysPage otherWaysPage;
 
     @BeforeEach

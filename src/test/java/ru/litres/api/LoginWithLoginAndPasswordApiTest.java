@@ -15,7 +15,6 @@ import static org.hamcrest.Matchers.equalTo;
 @Epic("API тесты")
 @Feature("API тесты формы входа с логином и паролем")
 public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
-    private static final Logger logger = LogManager.getLogger(LoginWithLoginAndPasswordApiTest.class);
 
     @Test
     @DisplayName("Не заданы параметры логина и пароля")

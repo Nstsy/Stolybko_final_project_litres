@@ -5,7 +5,7 @@ import io.qameta.allure.Step;
 
 public class UsersLogin {
 
-    static Faker faker = new Faker();
+    public static Faker faker = new Faker();
 
     private static final String LOGIN_INVALID = faker.name().firstName() + "@belarus";
     private static final String LOGIN_UNREGISTERED = faker.internet().emailAddress();

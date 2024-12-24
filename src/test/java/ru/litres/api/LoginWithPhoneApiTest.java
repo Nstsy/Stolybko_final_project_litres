@@ -15,7 +15,6 @@ import static org.hamcrest.Matchers.equalTo;
 @Epic("API тесты")
 @Feature("API тесты формы входа с номером телефона")
 public class LoginWithPhoneApiTest extends BaseApiTest {
-    private static final Logger logger = LogManager.getLogger(LoginWithPhoneApiTest.class);
 
     @Test
     @DisplayName("Не заданы параметры кода страны и телефона")
