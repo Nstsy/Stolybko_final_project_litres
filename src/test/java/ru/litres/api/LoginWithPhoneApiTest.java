@@ -23,12 +23,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
 
         User userWithEmptyCodePhone = UsersPhone.getUserWithEmptyCodePhone();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithEmptyCodePhone);
-        response.log().all();
 
-        response.statusCode(422);
-        response.body(
-                "status", equalTo(422),
-                "error.type", equalTo("ParamValidationError"));
+        response.statusCode(422)
+                .body("status", equalTo(422),
+                        "error.type", equalTo("ParamValidationError"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }
@@ -40,12 +38,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
 
         User userWithInvalidCodePhone = UsersPhone.getUserWithInvalidCodePhone();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithInvalidCodePhone);
-        response.log().all();
 
-        response.statusCode(422);
-        response.body(
-                "status", equalTo(422),
-                "error.type", equalTo("ParamValidationError"));
+        response.statusCode(422)
+                .body("status", equalTo(422),
+                        "error.type", equalTo("ParamValidationError"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }
@@ -57,12 +53,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
 
         User userWithoutCode = UsersPhone.getUserWithoutCode();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithoutCode);
-        response.log().all();
 
-        response.statusCode(422);
-        response.body(
-                "status", equalTo(422),
-                "error.type", equalTo("ParamValidationError"));
+        response.statusCode(422)
+                .body("status", equalTo(422),
+                        "error.type", equalTo("ParamValidationError"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }
@@ -74,12 +68,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
 
         User userWithoutPhone = UsersPhone.getUserWithoutPhone();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithoutPhone);
-        response.log().all();
 
-        response.statusCode(422);
-        response.body(
-                "status", equalTo(422),
-                "error.type", equalTo("ParamValidationError"));
+        response.statusCode(422)
+                .body("status", equalTo(422),
+                        "error.type", equalTo("ParamValidationError"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }
@@ -91,10 +83,9 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
 
         User validUser = UsersPhone.getValidUserCodePhoneBY();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(validUser);
-        response.log().all();
 
-        response.statusCode(200);
-        response.body("status", equalTo(200));
+        response.statusCode(200)
+                .body("status", equalTo(200));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 200 подтвержден.");
     }
@@ -106,12 +97,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
 
         User userWithValidCode = UsersPhone.getUserWithValidCode();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithValidCode);
-        response.log().all();
 
-        response.statusCode(400);
-        response.body(
-                "status", equalTo(400),
-                "error.type", equalTo("InvalidPhoneNumber"));
+        response.statusCode(400)
+                .body("status", equalTo(400),
+                        "error.type", equalTo("InvalidPhoneNumber"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 400 подтвержден.");
     }
@@ -124,12 +113,9 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
         User userWithValidPhone = UsersPhone.getUserWithValidPhone();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithValidPhone);
 
-        response.log().all();
-
-        response.statusCode(422);
-        response.body(
-                "status", equalTo(422),
-                "error.type", equalTo("ParamValidationError"));
+        response.statusCode(422)
+                .body("status", equalTo(422),
+                        "error.type", equalTo("ParamValidationError"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }

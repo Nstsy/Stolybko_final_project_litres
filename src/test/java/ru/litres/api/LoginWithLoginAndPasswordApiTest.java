@@ -23,12 +23,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
 
         User userWithEmptyParameters = UsersLogin.getUserWithEmptyLoginPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithEmptyParameters);
-        response.log().all();
 
-        response.statusCode(422);
-        response.body(
-                "status", equalTo(422),
-                "error.type", equalTo("ParamValidationError"));
+        response.statusCode(422)
+                .body("status", equalTo(422),
+                        "error.type", equalTo("ParamValidationError"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 422 подтверждено.");
     }
@@ -40,12 +38,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
 
         User userWithInvalidParameters = UsersLogin.getUserWithInvalidLoginPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithInvalidParameters);
-        response.log().all();
 
-        response.statusCode(401);
-        response.body(
-                "status", equalTo(401),
-                "error.type", equalTo("Unauthorized"));
+        response.statusCode(401)
+                .body("status", equalTo(401),
+                        "error.type", equalTo("Unauthorized"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 401 подтверждено.");
     }
@@ -57,12 +53,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
 
         User userWithoutLogin = UsersLogin.getUserWithEmptyLogin();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithoutLogin);
-        response.log().all();
 
-        response.statusCode(422);
-        response.body(
-                "status", equalTo(422),
-                "error.type", equalTo("ParamValidationError"));
+        response.statusCode(422)
+                .body("status", equalTo(422),
+                        "error.type", equalTo("ParamValidationError"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 422 подтверждено.");
     }
@@ -74,12 +68,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
 
         User userWithoutPassword = UsersLogin.getUserWithValidLoginEmptyPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithoutPassword);
-        response.log().all();
 
-        response.statusCode(422);
-        response.body(
-                "status", equalTo(422),
-                "error.type", equalTo("ParamValidationError"));
+        response.statusCode(422)
+                .body("status", equalTo(422),
+                        "error.type", equalTo("ParamValidationError"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 422 подтверждено.");
     }
@@ -91,11 +83,9 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
 
         User validUser = UsersLogin.getValidUser();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(validUser);
-        response.log().all();
 
-        response.statusCode(200);
-        response.body(
-                "status", equalTo(200));
+        response.statusCode(200)
+                .body("status", equalTo(200));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 200 подтверждено.");
     }
@@ -107,12 +97,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
 
         User userWithValidLogin = UsersLogin.getUserWithValidLoginInvalidPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithValidLogin);
-        response.log().all();
 
-        response.statusCode(401);
-        response.body(
-                "status", equalTo(401),
-                "error.type", equalTo("Unauthorized"));
+        response.statusCode(401)
+                .body("status", equalTo(401),
+                        "error.type", equalTo("Unauthorized"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 401 подтверждено.");
     }
@@ -124,12 +112,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
 
         User userWithValidPassword = UsersLogin.getUserWithInvalidLoginValidPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithValidPassword);
-        response.log().all();
 
-        response.statusCode(401);
-        response.body(
-                "status", equalTo(401),
-                "error.type", equalTo("Unauthorized"));
+        response.statusCode(401)
+                .body("status", equalTo(401),
+                        "error.type", equalTo("Unauthorized"));
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 401 подтверждено.");
     }

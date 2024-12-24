@@ -24,7 +24,7 @@ public class SearchApiTest {
         SearchApi searchApi = new SearchApi();
         String searchText = "стивен";
         ValidatableResponse response = searchApi.getResponseForRequestWithData(searchText);
-        response.log().all();
+
         int actualStatusCode = response.extract().statusCode();
 
         Assertions.assertEquals(200, actualStatusCode, "Статус-код должен быть 200");

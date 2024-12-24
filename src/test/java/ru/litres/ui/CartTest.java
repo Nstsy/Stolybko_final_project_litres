@@ -34,7 +34,8 @@ public class CartTest {
     public void testAddBookInCart() {
         logger.info("ЗАПУСК ТЕСТА: Проверка формы поиска и добавления товара в корзину");
 
-        cartAddBookStep.searchBook()
+        cartAddBookStep
+                .searchBook()
                 .addBookInCart();
 
         String expectedText = BookMessages.TEXT_BOOK_IN_CART;
@@ -49,7 +50,8 @@ public class CartTest {
     public void testDeleteBookFromCart() {
         logger.info("ЗАПУСК ТЕСТА: Проверка удаления товара из корзины");
 
-        cartAddBookStep.searchBook()
+        cartAddBookStep
+                .searchBook()
                 .addBookInCart()
                 .deleteBookFromCart();
 
