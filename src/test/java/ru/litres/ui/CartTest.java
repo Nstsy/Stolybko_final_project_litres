@@ -27,9 +27,9 @@ public class CartTest extends BaseUiTest {
     }
 
     @Test
-    @DisplayName("Проверка формы поиска и добавления товара в корзину")
+    @DisplayName("Проверка добавления товара в корзину")
     public void testAddBookInCart() {
-        logger.info("ЗАПУСК ТЕСТА: Проверка формы поиска и добавления товара в корзину");
+        logger.info("ЗАПУСК ТЕСТА: Проверка добавления товара в корзину");
 
         String book = "Гарри Поттер";
         cartAddBookStep
@@ -38,7 +38,7 @@ public class CartTest extends BaseUiTest {
 
         Assertions.assertEquals(BookMessages.TEXT_BOOK_IN_CART, new BookPage().getBookInCartText(), "Ожидается текст 'В корзине Перейти'");
 
-        logger.info("ТЕСТ ЗАВЕРШЕН: Проверка формы поиска и добавления товара в корзину");
+        logger.info("ТЕСТ ЗАВЕРШЕН: Проверка добавления товара в корзину");
     }
 
     @Test
