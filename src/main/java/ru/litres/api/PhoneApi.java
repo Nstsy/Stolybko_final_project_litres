@@ -36,6 +36,4 @@ public class PhoneApi {
         headers.put("Content-Type", "application/json");
         return headers;
     }
-
-
 }
