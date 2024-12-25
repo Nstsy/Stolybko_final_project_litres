@@ -23,7 +23,7 @@ nstsy@yandex.ru
 Пакет **`enums`**:
 - *CountryCode*: Перечисления для кодов стран.
 
-Пакет **ui** (классы в проекте реализуют паттерн `Page Object Model`):
+Пакет **`ui`** (классы в проекте реализуют паттерн `Page Object Model`):
 - пакет `driver` с классом *Driver* и классом *Wait*
 - пакет `steps` с классами *CartAddBookStep*, *LoginPasswordStep*,*LoginWithPhoneStep*
 - пакет `pages`:
