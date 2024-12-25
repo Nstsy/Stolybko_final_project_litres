@@ -66,7 +66,8 @@ public class LoginWithPasswordTest extends BaseUiTest {
         logger.info("ЗАПУСК ТЕСТА: Проверка сообщения при пустом пароле");
 
         loginPasswordStep.fillLoginPasswordAndSubmit(UsersWithLoginAndPassword.getUserWithValidLoginEmptyPassword());
-        Assertions.assertEquals(LoginPasswordMessages.EMPTY_PWD_MESSAGE, loginPasswordPage.getEmptyPwdMes(), "Неверное сообщение при пустом пароле");
+        Assertions.assertEquals(LoginPasswordMessages.EMPTY_PWD_MESSAGE, loginPasswordPage.getEmptyPwdMes(),
+                "Неверное сообщение при пустом пароле");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка сообщения при пустом пароле");
     }

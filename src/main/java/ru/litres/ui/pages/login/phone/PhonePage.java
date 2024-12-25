@@ -88,12 +88,20 @@ public class PhonePage {
 
     private void enterPhoneNumber(WebElement phoneInput, String phone) {
         Wait.getWait(500L);
+        clickElement(phoneInput);
+        typePhoneNumber(phone);
+    }
+
+    private void clickElement(WebElement element) {
         Actions actions = new Actions(driver);
-        actions.moveToElement(phoneInput).click().perform();
+        actions.moveToElement(element).click().perform();
+    }
+
+    private void typePhoneNumber(String phone) {
+        Actions actions = new Actions(driver);
         for (char c : phone.toCharArray()) {
             actions.sendKeys(String.valueOf(c)).perform();
-            Wait.getWait(20L);
-        }
+            Wait.getWait(20L);}
     }
 
     @Step("Выбрать страну {country}")
@@ -101,11 +109,7 @@ public class PhonePage {
         logger.info("Выбор страны: {}", country.name());
 
         String xpath = "//img[@alt='" + country.name().toLowerCase() + "']";
-        WebElement countryElement = Wait.getWaitDriver(5).
-                until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-        countryElement.click();
-
-        logger.info("Страна {} выбрана.", country.name());
+        Wait.getWaitDriver(5).until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))).click();
         return this;
     }
 
@@ -114,17 +118,10 @@ public class PhonePage {
         logger.info("Клик по списку стран.");
 
         Wait.getWait(500L);
-        clickOnCountryList();
+        WebElement countryList = driver.findElement(By.xpath(PhoneXpath.BUTTON_COUNTRY_XPATH));
+        clickElement(countryList);
 
         logger.info("Список стран открыт.");
         return this;
     }
-
-    private void clickOnCountryList() {
-        WebElement countryList = driver.findElement(By.xpath(PhoneXpath.BUTTON_COUNTRY_XPATH));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(countryList).click().perform();
-    }
 }
-
-

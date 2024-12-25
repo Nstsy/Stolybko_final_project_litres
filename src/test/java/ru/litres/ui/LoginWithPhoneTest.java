@@ -73,13 +73,14 @@ public class LoginWithPhoneTest extends BaseUiTest {
     }
 
     @Test
-    @DisplayName("Проверка сообщения при корректном номере телефона, но недоступной стране")
+    @DisplayName("Проверка сообщения при корректном номере телефона, но недоступной для регистрации стране")
     public void testUnavailableCountryCorrectPhone() {
-        logger.info("ЗАПУСК ТЕСТА: Проверка сообщения при корректном номере телефона, но недоступной стране.");
+        logger.info("ЗАПУСК ТЕСТА: Проверка сообщения при корректном номере телефона, но недоступной для регистрации стране.");
 
         loginWithPhoneStep.chooseCountryAndfillPhone(UsersWithPhoneAndCountryCode.getValidUserCodePhoneBY());
-        Assertions.assertEquals(PhoneMessages.UNAVAILABLE_COUNTRY_MESSAGE, phonePage.getUnavailableCountryMes(), "Неверное сообщение при недоступной для регистрации стране");
+        Assertions.assertEquals(PhoneMessages.UNAVAILABLE_COUNTRY_MESSAGE, phonePage.getUnavailableCountryMes(),
+                "Неверное сообщение при недоступной для регистрации стране");
 
-        logger.info("ТЕСТ ЗАВЕРШЕН: Проверка сообщения при корректном номере телефона, но недоступной стране.");
+        logger.info("ТЕСТ ЗАВЕРШЕН: Проверка сообщения при корректном номере телефона, но недоступной для регистрации стране.");
     }
 }
