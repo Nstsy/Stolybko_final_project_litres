@@ -10,6 +10,7 @@ public class Wait {
     public static WebDriverWait getWaitDriver(int seconds){
         return wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(seconds));
     }
+
     public static void getWait(long milliseconds) {
         try {
             Thread.sleep(milliseconds);
