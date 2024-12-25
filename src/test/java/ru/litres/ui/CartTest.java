@@ -52,7 +52,8 @@ public class CartTest extends BaseUiTest {
                 .addBookInCart()
                 .deleteBookFromCart();
 
-        Assertions.assertEquals(BookMessages.TEXT_EMPTY_CART, new BookPage().getTextEmptyCart(), "Ожидается текст 'Пустая корзина'");
+        Assertions.assertEquals(BookMessages.TEXT_EMPTY_CART, new BookPage().getTextEmptyCart(),
+                "Ожидается текст 'Пустая корзина'");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка удаления товара из корзины");
     }
