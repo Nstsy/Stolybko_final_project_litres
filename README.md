@@ -60,7 +60,9 @@ nstsy@yandex.ru
 
 ## Отчет о результатах тестирования в Allure Report
 Отчеты формируются с использованием [Allure Report](https://docs.qameta.io/allure/#_report) и позволяют наглядно видеть результаты тестов, их статус и детали.  
+
 ![Allure](images/a.jpg)
 ![Allure](images/a1.jpg)
 ## Сборка проекта в Jenkins
+
 ![Jenkins](images/j.jpg)
