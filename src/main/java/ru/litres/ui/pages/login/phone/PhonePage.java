@@ -101,7 +101,8 @@ public class PhonePage {
         Actions actions = new Actions(driver);
         for (char c : phone.toCharArray()) {
             actions.sendKeys(String.valueOf(c)).perform();
-            Wait.getWait(20L);}
+            Wait.getWait(20L);
+        }
     }
 
     @Step("Выбрать страну {country}")
