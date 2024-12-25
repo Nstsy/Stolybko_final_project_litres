@@ -22,6 +22,10 @@ public class PhoneApi {
                 .log().all();
     }
 
+    public ValidatableResponse getResponseForRequestWithData(User user) {
+        return getResponseForRequestWithData(user.getCode().code + user.getPhone(), user.getCode().name());
+    }
+
     public static String getBody(String phone, String code) {
         return "{\"phone\":\"" + phone + "\",\"country_code\":\"" + code + "\"}";
     }
@@ -33,7 +37,5 @@ public class PhoneApi {
         return headers;
     }
 
-    public ValidatableResponse getResponseForRequestWithData(User user) {
-        return getResponseForRequestWithData(user.getCode().code + user.getPhone(), user.getCode().name());
-    }
+
 }

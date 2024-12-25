@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.litres.ui.driver.Driver;
+import ru.litres.ui.pages.book.BookPage;
 import ru.litres.ui.pages.login.login_password.LoginPasswordXpath;
 
 import java.util.Set;

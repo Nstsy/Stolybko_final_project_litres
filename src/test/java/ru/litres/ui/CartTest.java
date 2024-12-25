@@ -17,15 +17,12 @@ import ru.litres.ui.steps.CartAddBookStep;
 
 @Epic("UI тесты")
 @Feature("UI тест добавления и удаления товара из корзины")
-public class CartTest {
+public class CartTest extends BaseUiTest {
     private static final Logger logger = LogManager.getLogger();
     private CartAddBookStep cartAddBookStep;
 
     @BeforeEach
     public void setUp() {
-        logger.info("Инициализация драйвера и переход на главную страницу.");
-        WebDriver driver = Driver.getDriver();
-        driver.get("https://www.litres.ru/");
         cartAddBookStep = new CartAddBookStep();
     }
 
@@ -34,13 +31,12 @@ public class CartTest {
     public void testAddBookInCart() {
         logger.info("ЗАПУСК ТЕСТА: Проверка формы поиска и добавления товара в корзину");
 
+        String book = "Гарри Поттер";
         cartAddBookStep
-                .searchBook()
+                .searchBook(book)
                 .addBookInCart();
 
-        String expectedText = BookMessages.TEXT_BOOK_IN_CART;
-        String actualText = new BookPage().getBookInCartText();
-        Assertions.assertEquals(expectedText, actualText, "Ожидается текст 'В корзине Перейти'");
+        Assertions.assertEquals(BookMessages.TEXT_BOOK_IN_CART, new BookPage().getBookInCartText(), "Ожидается текст 'В корзине Перейти'");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка формы поиска и добавления товара в корзину");
     }
@@ -50,14 +46,13 @@ public class CartTest {
     public void testDeleteBookFromCart() {
         logger.info("ЗАПУСК ТЕСТА: Проверка удаления товара из корзины");
 
+        String book = "Гарри Поттер";
         cartAddBookStep
-                .searchBook()
+                .searchBook(book)
                 .addBookInCart()
                 .deleteBookFromCart();
 
-        String expectedText = BookMessages.TEXT_EMPTY_CART;
-        String actualText = new BookPage().getTextEmptyCart();
-        Assertions.assertEquals(expectedText, actualText, "Ожидается текст 'Пустая корзина'");
+        Assertions.assertEquals(BookMessages.TEXT_EMPTY_CART, new BookPage().getTextEmptyCart(), "Ожидается текст 'Пустая корзина'");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка удаления товара из корзины");
     }

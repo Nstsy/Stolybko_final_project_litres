@@ -3,14 +3,11 @@ package ru.litres.api;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.restassured.response.ValidatableResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.litres.api.utils.ValidationUtils;
 import ru.litres.domain.User;
-import ru.litres.domain.UsersLogin;
-
-import static org.hamcrest.Matchers.equalTo;
+import ru.litres.domain.UsersWithLoginAndPassword;
 
 @Epic("API тесты")
 @Feature("API тесты формы входа с логином и паролем")
@@ -21,12 +18,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
     public void testWithEmptyParameters() {
         logger.info("ЗАПУСК ТЕСТА: Не заданы параметры логина и пароля");
 
-        User userWithEmptyParameters = UsersLogin.getUserWithEmptyLoginPassword();
+        User userWithEmptyParameters = UsersWithLoginAndPassword.getUserWithEmptyLoginPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithEmptyParameters);
 
-        response.statusCode(422)
-                .body("status", equalTo(422),
-                        "error.type", equalTo("ParamValidationError"));
+        ValidationUtils.validateUnprocessableEntity(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 422 подтверждено.");
     }
@@ -36,12 +31,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
     public void testWithInvalidParameters() {
         logger.info("ЗАПУСК ТЕСТА: Некорректные параметры логина и пароля");
 
-        User userWithInvalidParameters = UsersLogin.getUserWithInvalidLoginPassword();
+        User userWithInvalidParameters = UsersWithLoginAndPassword.getUserWithInvalidLoginPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithInvalidParameters);
 
-        response.statusCode(401)
-                .body("status", equalTo(401),
-                        "error.type", equalTo("Unauthorized"));
+        ValidationUtils.validateUnauthorized(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 401 подтверждено.");
     }
@@ -51,12 +44,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
     public void testWithoutLogin() {
         logger.info("ЗАПУСК ТЕСТА: Отсутствует логин в запросе");
 
-        User userWithoutLogin = UsersLogin.getUserWithEmptyLogin();
+        User userWithoutLogin = UsersWithLoginAndPassword.getUserWithEmptyLogin();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithoutLogin);
 
-        response.statusCode(422)
-                .body("status", equalTo(422),
-                        "error.type", equalTo("ParamValidationError"));
+        ValidationUtils.validateUnprocessableEntity(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 422 подтверждено.");
     }
@@ -66,12 +57,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
     public void testWithoutPassword() {
         logger.info("ЗАПУСК ТЕСТА: Отсутствует пароль в запросе");
 
-        User userWithoutPassword = UsersLogin.getUserWithValidLoginEmptyPassword();
+        User userWithoutPassword = UsersWithLoginAndPassword.getUserWithValidLoginEmptyPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithoutPassword);
 
-        response.statusCode(422)
-                .body("status", equalTo(422),
-                        "error.type", equalTo("ParamValidationError"));
+        ValidationUtils.validateUnprocessableEntity(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 422 подтверждено.");
     }
@@ -81,11 +70,11 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
     public void testSuccessfulLogin() {
         logger.info("ЗАПУСК ТЕСТА: Заданы корректные данные");
 
-        User validUser = UsersLogin.getValidUser();
+        User validUser = UsersWithLoginAndPassword.getValidUser();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(validUser);
 
-        response.statusCode(200)
-                .body("status", equalTo(200));
+        ValidationUtils.validateOk(response);
+
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 200 подтверждено.");
     }
@@ -95,12 +84,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
     public void testWithValidLogin() {
         logger.info("ЗАПУСК ТЕСТА: Задан коррекный логин, некорректный пароль");
 
-        User userWithValidLogin = UsersLogin.getUserWithValidLoginInvalidPassword();
+        User userWithValidLogin = UsersWithLoginAndPassword.getUserWithValidLoginInvalidPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithValidLogin);
 
-        response.statusCode(401)
-                .body("status", equalTo(401),
-                        "error.type", equalTo("Unauthorized"));
+        ValidationUtils.validateUnauthorized(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 401 подтверждено.");
     }
@@ -110,12 +97,10 @@ public class LoginWithLoginAndPasswordApiTest extends BaseApiTest {
     public void testWithValidPassword() {
         logger.info("ЗАПУСК ТЕСТА: Задан некоррекный логин, корректный пароль");
 
-        User userWithValidPassword = UsersLogin.getUserWithInvalidLoginValidPassword();
+        User userWithValidPassword = UsersWithLoginAndPassword.getUserWithInvalidLoginValidPassword();
         ValidatableResponse response = loginApi.getResponseForRequestWithData(userWithValidPassword);
 
-        response.statusCode(401)
-                .body("status", equalTo(401),
-                        "error.type", equalTo("Unauthorized"));
+        ValidationUtils.validateUnauthorized(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемое состояние 401 подтверждено.");
     }

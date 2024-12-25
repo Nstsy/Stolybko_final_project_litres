@@ -10,14 +10,12 @@ public class CartAddBookStep {
     private static final Logger logger = LogManager.getLogger();
 
     @Step("Найти книгу через поисковую строку")
-    public CartAddBookStep searchBook() {
-        String book = "Гарри Поттер";
+    public CartAddBookStep searchBook(String book) {
         logger.info("Поиск книги: {}", book);
         new HomePage()
                 .fillSearch(book)
                 .clickSearchButton()
                 .clickOnBookFromSearch();
-        logger.info("Книга '{}' найдена.", book);
         return this;
     }
 

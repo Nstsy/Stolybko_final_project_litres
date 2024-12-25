@@ -22,6 +22,10 @@ public class LoginApi {
                 .log().all();
     }
 
+    public ValidatableResponse getResponseForRequestWithData(User user) {
+        return getResponseForRequestWithData(user.getLogin(), user.getPassword());
+    }
+
     public static String getBody(String login, String password) {
         return "{\"login\":\"" + login + "\",\"password\":\"" + password + "\"}";
     }
@@ -33,7 +37,5 @@ public class LoginApi {
         return headers;
     }
 
-    public ValidatableResponse getResponseForRequestWithData(User user) {
-        return getResponseForRequestWithData(user.getLogin(), user.getPassword());
-    }
+
 }

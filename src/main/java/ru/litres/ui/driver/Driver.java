@@ -8,6 +8,9 @@ import java.time.Duration;
 public class Driver {
     private static WebDriver driver;
 
+    public Driver() {
+    }
+
     public static WebDriver getDriver() {
         if (driver == null) {
             driver = new ChromeDriver();

@@ -3,14 +3,11 @@ package ru.litres.api;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.restassured.response.ValidatableResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.litres.api.utils.ValidationUtils;
 import ru.litres.domain.User;
-import ru.litres.domain.UsersPhone;
-
-import static org.hamcrest.Matchers.equalTo;
+import ru.litres.domain.UsersWithPhoneAndCountryCode;
 
 @Epic("API тесты")
 @Feature("API тесты формы входа с номером телефона")
@@ -21,12 +18,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
     public void testWithEmptyCodePhone() {
         logger.info("ЗАПУСК ТЕСТА: Не заданы параметры кода страны и телефона");
 
-        User userWithEmptyCodePhone = UsersPhone.getUserWithEmptyCodePhone();
+        User userWithEmptyCodePhone = UsersWithPhoneAndCountryCode.getUserWithEmptyCodePhone();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithEmptyCodePhone);
 
-        response.statusCode(422)
-                .body("status", equalTo(422),
-                        "error.type", equalTo("ParamValidationError"));
+        ValidationUtils.validateUnprocessableEntity(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }
@@ -36,12 +31,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
     public void testWithInvalidCodePhone() {
         logger.info("ЗАПУСК ТЕСТА: Некорректные параметры кода страны и телефона");
 
-        User userWithInvalidCodePhone = UsersPhone.getUserWithInvalidCodePhone();
+        User userWithInvalidCodePhone = UsersWithPhoneAndCountryCode.getUserWithInvalidCodePhone();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithInvalidCodePhone);
 
-        response.statusCode(422)
-                .body("status", equalTo(422),
-                        "error.type", equalTo("ParamValidationError"));
+        ValidationUtils.validateUnprocessableEntity(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }
@@ -51,12 +44,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
     public void testWithoutCode() {
         logger.info("ЗАПУСК ТЕСТА: Отсутствует код страны в запросе");
 
-        User userWithoutCode = UsersPhone.getUserWithoutCode();
+        User userWithoutCode = UsersWithPhoneAndCountryCode.getUserWithoutCode();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithoutCode);
 
-        response.statusCode(422)
-                .body("status", equalTo(422),
-                        "error.type", equalTo("ParamValidationError"));
+        ValidationUtils.validateUnprocessableEntity(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }
@@ -66,12 +57,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
     public void testWithoutPhone() {
         logger.info("ЗАПУСК ТЕСТА: Отсутствует телефон в запросе");
 
-        User userWithoutPhone = UsersPhone.getUserWithoutPhone();
+        User userWithoutPhone = UsersWithPhoneAndCountryCode.getUserWithoutPhone();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithoutPhone);
 
-        response.statusCode(422)
-                .body("status", equalTo(422),
-                        "error.type", equalTo("ParamValidationError"));
+        ValidationUtils.validateUnprocessableEntity(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }
@@ -81,11 +70,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
     public void testSuccessfulLogin() {
         logger.info("ЗАПУСК ТЕСТА: Заданы корректные данные");
 
-        User validUser = UsersPhone.getValidUserCodePhoneBY();
+        User validUser = UsersWithPhoneAndCountryCode.getValidUserCodePhoneBY();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(validUser);
 
-        response.statusCode(200)
-                .body("status", equalTo(200));
+        ValidationUtils.validateOk(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 200 подтвержден.");
     }
@@ -95,12 +83,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
     public void testWithValidCode() {
         logger.info("ЗАПУСК ТЕСТА: Задан коррекный код страны, некорректный телефон");
 
-        User userWithValidCode = UsersPhone.getUserWithValidCode();
+        User userWithValidCode = UsersWithPhoneAndCountryCode.getUserWithValidCode();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithValidCode);
 
-        response.statusCode(400)
-                .body("status", equalTo(400),
-                        "error.type", equalTo("InvalidPhoneNumber"));
+        ValidationUtils.validateBadRequest(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 400 подтвержден.");
     }
@@ -110,12 +96,10 @@ public class LoginWithPhoneApiTest extends BaseApiTest {
     public void testWithValidPhone() {
         logger.info("ЗАПУСК ТЕСТА: Задан некоррекный код страны, корректный телефон");
 
-        User userWithValidPhone = UsersPhone.getUserWithValidPhone();
+        User userWithValidPhone = UsersWithPhoneAndCountryCode.getUserWithValidPhone();
         ValidatableResponse response = phoneApi.getResponseForRequestWithData(userWithValidPhone);
 
-        response.statusCode(422)
-                .body("status", equalTo(422),
-                        "error.type", equalTo("ParamValidationError"));
+        ValidationUtils.validateUnprocessableEntity(response);
 
         logger.info("ТЕСТ ЗАВЕРШЕН: ожидаемый статус-код 422 подтвержден.");
     }

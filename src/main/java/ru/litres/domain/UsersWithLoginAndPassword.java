@@ -3,7 +3,7 @@ package ru.litres.domain;
 import com.github.javafaker.Faker;
 import io.qameta.allure.Step;
 
-public class UsersLogin {
+public class UsersWithLoginAndPassword {
 
     public static Faker faker = new Faker();
 

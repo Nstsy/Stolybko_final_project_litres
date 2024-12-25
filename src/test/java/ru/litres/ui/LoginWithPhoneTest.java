@@ -5,8 +5,10 @@ import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import ru.litres.domain.UsersPhone;
+import ru.litres.domain.UsersWithPhoneAndCountryCode;
+import ru.litres.ui.pages.home.HomePage;
 import ru.litres.ui.pages.login.phone.PhoneMessages;
 import ru.litres.ui.pages.login.phone.PhonePage;
 import ru.litres.ui.steps.LoginWithPhoneStep;
@@ -16,12 +18,13 @@ import ru.litres.ui.steps.LoginWithPhoneStep;
 public class LoginWithPhoneTest extends BaseUiTest {
     private PhonePage phonePage;
     private LoginWithPhoneStep loginWithPhoneStep;
+    private HomePage homePage;
 
     @BeforeEach
     public void setUp() {
         logger.info("Настройка тестовой среды.");
-        phonePage = new PhonePage();
-        phonePage.clickButtonNumberPhone();
+        homePage = new HomePage().clickButtonLogin();
+        phonePage = new PhonePage().clickButtonNumberPhone();
         loginWithPhoneStep = new LoginWithPhoneStep(phonePage);
     }
 
@@ -30,11 +33,8 @@ public class LoginWithPhoneTest extends BaseUiTest {
     public void testEmptyPhoneNumber() {
         logger.info("ЗАПУСК ТЕСТА: Проверка сообщения при пустом номере телефона.");
 
-        loginWithPhoneStep.fillPhoneAndClickContinue(UsersPhone.getUserWithoutPhone());
-
-        String expectedText = PhoneMessages.EMPTY_PHONE_MES;
-        String actualText = phonePage.getEmptyPhoneMes();
-        Assertions.assertEquals(expectedText, actualText, "Неверное сообщение при пустом номере телефона");
+        loginWithPhoneStep.fillPhoneAndClickContinue(UsersWithPhoneAndCountryCode.getUserWithoutPhone());
+        Assertions.assertEquals(PhoneMessages.EMPTY_PHONE_MESSAGE, phonePage.getEmptyPhoneMes(), "Неверное сообщение при пустом номере телефона");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка сообщения при пустом номере телефона.");
     }
@@ -44,11 +44,8 @@ public class LoginWithPhoneTest extends BaseUiTest {
     public void testIncorrectPhoneNumber() {
         logger.info("ЗАПУСК ТЕСТА: Проверка сообщения при некорректном номере телефона.");
 
-        loginWithPhoneStep.fillPhoneAndClickContinue(UsersPhone.getUserWithInvalidCodePhone());
-
-        String expectedText = PhoneMessages.INVALID_PHONE_MES;
-        String actualText = phonePage.getInvalidPhoneMes();
-        Assertions.assertEquals(expectedText, actualText, "Неверное сообщение при некорректном номере телефона");
+        loginWithPhoneStep.fillPhoneAndClickContinue(UsersWithPhoneAndCountryCode.getUserWithInvalidCodePhone());
+        Assertions.assertEquals(PhoneMessages.INVALID_PHONE_MESSAGE, phonePage.getInvalidPhoneMes(), "Неверное сообщение при некорректном номере телефона");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка сообщения при некорректном номере телефона.");
     }
@@ -58,11 +55,8 @@ public class LoginWithPhoneTest extends BaseUiTest {
     public void testCorrectPhoneNumber() {
         logger.info("ЗАПУСК ТЕСТА: Проверка сообщения при корректном номере телефона, Россия.");
 
-        loginWithPhoneStep.fillPhoneAndClickContinue(UsersPhone.getValidUserCodePhoneRU());
-
-        String expectedText = PhoneMessages.CORRECT_PHONE_MES;
-        String actualText = phonePage.getCorrectPhoneMes();
-        Assertions.assertEquals(expectedText, actualText, "Неверное сообщение при корректном номере телефона");
+        loginWithPhoneStep.fillPhoneAndClickContinue(UsersWithPhoneAndCountryCode.getValidUserCodePhoneRU());
+        Assertions.assertEquals(PhoneMessages.CORRECT_PHONE_MESSAGE, phonePage.getCorrectPhoneMes(), "Неверное сообщение при корректном номере телефона");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка сообщения при корректном номере телефона, Россия.");
     }
@@ -72,11 +66,8 @@ public class LoginWithPhoneTest extends BaseUiTest {
     public void testAbkhaziaCorrectPhone() {
         logger.info("ЗАПУСК ТЕСТА: Проверка сообщения при корректном номере телефона, Абхазия.");
 
-        loginWithPhoneStep.chooseCountryAndfillPhone(UsersPhone.getValidUserCodePhoneAB());
-
-        String expectedText = PhoneMessages.ABKHAZIA_COUNTRY_MES;
-        String actualText = phonePage.getAbkhaziaCountryMes();
-        Assertions.assertEquals(expectedText, actualText, "Неверное сообщение при корректном номере телефона и выборе Абхазии");
+        loginWithPhoneStep.chooseCountryAndfillPhone(UsersWithPhoneAndCountryCode.getValidUserCodePhoneAB());
+        Assertions.assertEquals(PhoneMessages.ABKHAZIA_COUNTRY_MESSAGE, phonePage.getAbkhaziaCountryMes(), "Неверное сообщение при корректном номере телефона и выборе Абхазии");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка сообщения при корректном номере телефона, Абхазия.");
     }
@@ -86,11 +77,8 @@ public class LoginWithPhoneTest extends BaseUiTest {
     public void testUnavailableCountryCorrectPhone() {
         logger.info("ЗАПУСК ТЕСТА: Проверка сообщения при корректном номере телефона, но недоступной стране.");
 
-        loginWithPhoneStep.chooseCountryAndfillPhone(UsersPhone.getValidUserCodePhoneBY());
-
-        String expectedText = PhoneMessages.UNAVAILABLE_COUNTRY_MES;
-        String actualText = phonePage.getUnavailableCountryMes();
-        Assertions.assertEquals(expectedText, actualText, "Неверное сообщение при недоступной для регистрации стране");
+        loginWithPhoneStep.chooseCountryAndfillPhone(UsersWithPhoneAndCountryCode.getValidUserCodePhoneBY());
+        Assertions.assertEquals(PhoneMessages.UNAVAILABLE_COUNTRY_MESSAGE, phonePage.getUnavailableCountryMes(), "Неверное сообщение при недоступной для регистрации стране");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка сообщения при корректном номере телефона, но недоступной стране.");
     }

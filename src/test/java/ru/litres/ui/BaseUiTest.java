@@ -10,15 +10,14 @@ import ru.litres.ui.pages.home.HomePage;
 
 public class BaseUiTest {
     protected static final Logger logger = LogManager.getLogger();
-    protected HomePage homePage;
 
     @BeforeEach
     public void startFromHome() {
         logger.info("Переход на главную страницу https://www.litres.ru/");
+        String url = "https://www.litres.ru/";
         WebDriver driver = Driver.getDriver();
-        driver.get("https://www.litres.ru/");
+        driver.get(url);
         logger.info("Главная страница загружена. Переход к странице входа.");
-        homePage = new HomePage().clickButtonLogin();
     }
 
     @AfterEach

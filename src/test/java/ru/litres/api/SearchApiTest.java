@@ -3,6 +3,7 @@ package ru.litres.api;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.restassured.response.ValidatableResponse;
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
@@ -26,10 +27,12 @@ public class SearchApiTest {
         ValidatableResponse response = searchApi.getResponseForRequestWithData(searchText);
 
         int actualStatusCode = response.extract().statusCode();
-
-        Assertions.assertEquals(200, actualStatusCode, "Статус-код должен быть 200");
         List<String> texts = response.extract().jsonPath().getList("payload.data.text");
-        Assertions.assertTrue(texts.stream().anyMatch(s -> s.contains(searchText)), "Ответ должен содержать текст: " + searchText);
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(HttpStatus.SC_OK, actualStatusCode, "Статус-код должен быть 200"),
+                () -> Assertions.assertTrue(searchApi.containsText(texts, searchText), "Ответ должен содержать текст: " + searchText)
+        );
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Ответ содержит текст '{}' - проверка успешна.", searchText);
     }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.litres.ui.pages.home.HomePage;
 import ru.litres.ui.pages.login.otherways.OtherWaysMessages;
 import ru.litres.ui.pages.login.otherways.OtherWaysPage;
 
@@ -15,12 +16,13 @@ import ru.litres.ui.pages.login.otherways.OtherWaysPage;
 @Feature("UI тесты формы логина при входе другими способами")
 public class LoginWithOtherWaysTest extends BaseUiTest {
     private OtherWaysPage otherWaysPage;
+    private HomePage homePage;
 
     @BeforeEach
     public void setUp() {
         logger.info("Переход на страницу 'Другие способы входа'.");
-        otherWaysPage = new OtherWaysPage();
-        otherWaysPage.clickButtonOtherWays();
+        homePage = new HomePage().clickButtonLogin();
+        otherWaysPage=new OtherWaysPage().clickButtonOtherWays();
     }
 
     @Test
@@ -28,9 +30,7 @@ public class LoginWithOtherWaysTest extends BaseUiTest {
     public void testOtherWaysTitle() {
         logger.info("ЗАПУСК ТЕСТА: Проверка корректности названия блока 'Другие способы'");
 
-        String expectedText = OtherWaysMessages.TEXT_OTHER_WAYS;
-        String actualText = otherWaysPage.getOtherWaysText();
-        Assertions.assertEquals(expectedText, actualText, "Название блока 'Другие способы' отображается некорректно");
+        Assertions.assertEquals(OtherWaysMessages.TEXT_OTHER_WAYS, otherWaysPage.getOtherWaysText(), "Название блока 'Другие способы' отображается некорректно");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка корректности названия блока 'Другие способы'");
     }
@@ -41,9 +41,7 @@ public class LoginWithOtherWaysTest extends BaseUiTest {
         logger.info("ЗАПУСК ТЕСТА: Проверка работы ссылки 'Публичная оферта'");
 
         otherWaysPage.clickButtonLitresOferta();
-        String expectedText = OtherWaysMessages.TEXT_LITRES_OFERTA;
-        String actualText = otherWaysPage.getLitresOfertaText();
-        Assertions.assertEquals(expectedText, actualText, "Переход по ссылке 'Публичная оферта' некорректен");
+        Assertions.assertEquals(OtherWaysMessages.TEXT_LITRES_OFERTA, otherWaysPage.getLitresOfertaText(), "Переход по ссылке 'Публичная оферта' некорректен");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка работы ссылки 'Публичная оферта'");
     }
@@ -54,9 +52,7 @@ public class LoginWithOtherWaysTest extends BaseUiTest {
         logger.info("ЗАПУСК ТЕСТА: Проверка работы ссылки 'Политика обработки персональных данных'");
 
         otherWaysPage.clickButtonPrivacyPolicy();
-        String expectedText = OtherWaysMessages.TEXT_PRIVACY_POLICY;
-        String actualText = otherWaysPage.getPrivacyPolicyText();
-        Assertions.assertEquals(expectedText, actualText, "Переход по ссылке 'Политика обработки персональных данных' некорректен");
+        Assertions.assertEquals(OtherWaysMessages.TEXT_PRIVACY_POLICY, otherWaysPage.getPrivacyPolicyText(), "Переход по ссылке 'Политика обработки персональных данных' некорректен");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка работы ссылки 'Политика обработки персональных данных'");
     }
@@ -66,8 +62,7 @@ public class LoginWithOtherWaysTest extends BaseUiTest {
     public void testSocialMediaLogosDisplayed() {
         logger.info("ЗАПУСК ТЕСТА: Проверка наличия логотипов социальных сетей");
 
-        boolean areLogosDisplayed = otherWaysPage.checkLogoSocialsLinks();
-        Assertions.assertTrue(areLogosDisplayed, "Не все логотипы социальных сетей отображаются");
+        Assertions.assertTrue(otherWaysPage.checkLogoSocialsLinks(), "Не все логотипы социальных сетей отображаются");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка наличия логотипов социальных сетей");
     }
@@ -78,9 +73,7 @@ public class LoginWithOtherWaysTest extends BaseUiTest {
         logger.info("ЗАПУСК ТЕСТА: Проверка работы кнопки 'Приложение Литрес'");
 
         otherWaysPage.clickButtonLitresApp();
-        String expectedText = OtherWaysMessages.TEXT_LITRES_APP;
-        String actualText = otherWaysPage.getLitresAppText();
-        Assertions.assertEquals(expectedText, actualText, "Переход по ссылке 'Приложение Литрес' некорректно");
+        Assertions.assertEquals(OtherWaysMessages.TEXT_LITRES_APP, otherWaysPage.getLitresAppText(), "Переход по ссылке 'Приложение Литрес' некорректно");
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Проверка работы кнопки 'Приложение Литрес'");
     }

@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.litres.enums.CountryCode;
 import ru.litres.ui.driver.Driver;
+import ru.litres.ui.driver.Wait;
 
 import java.time.Duration;
 
@@ -76,23 +78,22 @@ public class PhonePage {
     public PhonePage fillPhone(String phone) {
         logger.info("Ввод номера телефона: {}", phone);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        WebElement phoneInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(PhoneXpath.INPUT_PHONE_XPATH)));
-        try {
-            Thread.sleep(1000L);
-            Actions actions = new Actions(driver);
-            actions.moveToElement(phoneInput).click().perform();
-            for (char c : phone.toCharArray()) {
-                actions.sendKeys(String.valueOf(c)).perform();
-                Thread.sleep(20L);
-            }
-        } catch (InterruptedException e) {
-            logger.error("Ошибка при вводе номера.");
-            throw new RuntimeException(e);
-        }
+        WebElement phoneInput = Wait.getWaitDriver(5).
+                until(ExpectedConditions.elementToBeClickable(By.xpath(PhoneXpath.INPUT_PHONE_XPATH)));
+        enterPhoneNumber(phoneInput, phone);
 
-        logger.info("Номер телефона успешно введен.");
+        logger.info("Номер телефона введен.");
         return this;
+    }
+
+    private void enterPhoneNumber(WebElement phoneInput, String phone) {
+        Wait.getWait(500L);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(phoneInput).click().perform();
+        for (char c : phone.toCharArray()) {
+            actions.sendKeys(String.valueOf(c)).perform();
+            Wait.getWait(20L);
+        }
     }
 
     @Step("Выбрать страну {country}")
@@ -100,8 +101,8 @@ public class PhonePage {
         logger.info("Выбор страны: {}", country.name());
 
         String xpath = "//img[@alt='" + country.name().toLowerCase() + "']";
-        WebElement countryElement = new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        WebElement countryElement = Wait.getWaitDriver(5).
+                until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
         countryElement.click();
 
         logger.info("Страна {} выбрана.", country.name());
@@ -112,17 +113,18 @@ public class PhonePage {
     public PhonePage clickCountryList() {
         logger.info("Клик по списку стран.");
 
-        try {
-            Thread.sleep(500L);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        WebElement countryList = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PhoneXpath.BUTTON_COUNTRY_XPATH)));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(countryList).click().perform();
+        Wait.getWait(500L);
+        clickOnCountryList();
 
         logger.info("Список стран открыт.");
         return this;
     }
+
+    private void clickOnCountryList() {
+        WebElement countryList = driver.findElement(By.xpath(PhoneXpath.BUTTON_COUNTRY_XPATH));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(countryList).click().perform();
+    }
 }
+
+
