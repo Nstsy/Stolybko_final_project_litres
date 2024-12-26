@@ -23,7 +23,7 @@ public class SearchApiTest {
         logger.info("ЗАПУСК ТЕСТА: Запрос в поисковой строке");
 
         SearchApi searchApi = new SearchApi();
-        String searchText = "стивен";
+        String searchText = "Стивен Кинг";
         ValidatableResponse response = searchApi.getResponseForRequestWithData(searchText);
 
         int actualStatusCode = response.extract().statusCode();
@@ -31,7 +31,7 @@ public class SearchApiTest {
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(HttpStatus.SC_OK, actualStatusCode, "Статус-код должен быть 200"),
-                () -> Assertions.assertTrue(searchApi.containsText(texts, searchText), "Ответ должен содержать текст: " + searchText)
+                () -> Assertions.assertTrue(searchApi.containsText(texts, searchText.toLowerCase()), "Ответ должен содержать текст: " + searchText)
         );
 
         logger.info("ТЕСТ ЗАВЕРШЕН: Ответ содержит текст '{}' - проверка успешна.", searchText);
